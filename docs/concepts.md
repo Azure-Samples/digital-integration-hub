@@ -54,10 +54,10 @@ Along with a definition of the host environment, the template also includes a co
 
 ## The application
 This Azure Sample solution architecture is inspired by the Digital Intration Hub architecture:  
-	- The front end processing layer are implemented by Azure API Management for providing the discoverability and gateways for all your APIs. The microservices implementation leverage serverless functions which provide a simple CRUD based API. 
-	- The data layer is implemented using PostgresDB
-	- For Analytics and getting a single pane of glass view over your disparate data sources this is where you could optionally add on Azure Synapse analytics to extend this solution. This is not included in the sample. 
-	- The Integration layer in this case uses Azure Event Grid for the event driven programming model to ensure the system responds to all API events in real time and Logic Apps to react upon these events and process the incoming data. The implementation of the logic app is left blank, leaving you to leverage the 450+ connector ecosystem to implement the syncing functinoality between the data layer and your backend systems of record you choose to integration the Digital Integration Hub with. 
+- The front end processing layer are implemented by Azure API Management for providing the discoverability and gateways for all your APIs. The microservices implementation leverage serverless functions which provide a simple CRUD based API. 
+- The data layer is implemented using PostgresDB
+- For Analytics and getting a single pane of glass view over your disparate data sources this is where you could optionally add on Azure Synapse analytics to extend this solution. This is not included in the sample. 
+- The Integration layer in this case uses Azure Event Grid for the event driven programming model to ensure the system responds to all API events in real time and Logic Apps to react upon these events and process the incoming data. The implementation of the logic app is left blank, leaving you to leverage the 450+ connector ecosystem to implement the syncing functinoality between the data layer and your backend systems of record you choose to integration the Digital Integration Hub with. 
 
 The application is comprised of an Azure Function API implemented written in Typescript, a PostgreSQL 'items' database and an Integration layer implemented by Logic Apps and Event Grid. It uses an Object-Relational Mapper ([Sequelize](https://sequelize.org/master/manual/getting-started.html)) and implements a single object, `items`, to get you started.
 
