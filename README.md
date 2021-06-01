@@ -50,9 +50,7 @@ Most of the routines you would want to run when developing are implemeted as [ma
 On checkins, the [app builds](.github/workflows/build.yaml) and a [Porter bundle](src/bundle) is being created and pushed to be consumed in the deploy stages. 
 
 
-## Required to get started
-
-1. Setup an ARC-enabled Kubernetes cluster, by following [these instructions](https://github.com/microsoft/Azure-App-Service-on-Azure-Arc/blob/main/docs/getting-started/setup.md). The [src/ARC/lima-setup.sh](src/ARC/lima-setup.sh) script can help, but check the setup instructions in the above link, as these change frequently.
+## Required to get started 
 
 1. Enable CNAB bundle support in GitHub
     1. Follow [this guide](https://docs.github.com/en/free-pro-team@latest/packages/guides/enabling-improved-container-support) to enable support for CNAB on GitHub
@@ -64,6 +62,8 @@ On checkins, the [app builds](.github/workflows/build.yaml) and a [Porter bundle
     | Azure credentials | `AZURE_CREDENTIALS` | `az login -o none && az ad sp create-for-rbac --role contributor --sdk-auth` |
     | Postgres admin password | `POSTGRES_DB_ADMIN_PASSWORD` | Configure what postgres database admin password you want to use - [more info](https://docs.microsoft.com/en-us/azure/postgresql/concepts-security#access-management) by saving the password to a [GitHub Secrets](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) name |
 
-1. Check the environment.yaml file. For ARC deployments, ensure to include the correct App Service Environment to use. The syntax is commented in the file.
+1. Check the environment.yaml file to change the naming prefix for your deployments. 
 
-1. Run the build workflow, this will eventually kick-off the deployment workflow as well.
+1. To deploy this solution to azure run the build workflow, this will eventually kick-off the deployment workflow as well.
+
+
