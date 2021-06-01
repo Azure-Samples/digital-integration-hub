@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0.0-DRAFT+TODO",
+  "name": "webapi-nodejs",
+  "created": "2021-01-13T14:13:54.796881+01:00",
+  "modified": "2021-01-13T14:13:54.796881+01:00",
+  "parameters": [
+    {
+      "name": "LOCATION",
+      "source": {
+        "env": "LOCATION"
+      }
+    },
+    {
+      "name": "NAME_PREFIX",
+      "source": {
+        "env": "NAME_PREFIX"
+      }
+    },
+    {
+      "name": "ENVIRONMENT_TAG",
+      "source": {
+        "env": "ENVIRONMENT_TAG"
+      }
+    },
+    {
+      "name": "POSTGRES_PASSWORD",
+      "source": {
+        "env": "POSTGRES_PASSWORD"
+      }
+    }
+  ]
+}

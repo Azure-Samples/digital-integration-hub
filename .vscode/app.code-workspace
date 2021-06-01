@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../src/function"
+		}
+	],
+	"settings": {
+		"debug.internalConsoleOptions": "neverOpen",
+		"azurite.silent": true
+	}
+}

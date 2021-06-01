@@ -1,0 +1,31 @@
+{
+    "PARAMS_INTEGRATION_ENDPOINT": {
+        "type": "string",
+        "value": "@appsetting('INTEGRATION_ENDPOINT')"
+    },
+    "PARAMS_INTEGRATION_PATH": {
+        "type": "string",
+        "value": "@appsetting('INTEGRATION_PATH')"
+    }, 
+    "EVENTGRID_CONNECTOR_API":{
+        "type":"string",
+        "value":"/subscriptions/@appsetting('WORKFLOWS_SUBSCRIPTION_ID')/providers/Microsoft.Web/locations/@appsetting('WORKFLOWS_LOCATION_NAME')/managedApis/azureeventgrid"
+    }, 
+    "EVENTGRID_CONNECTION":{
+        "type":"string",
+        "value":"/subscriptions/@appsetting('WORKFLOWS_SUBSCRIPTION_ID')/resourceGroups/@appsetting('WORKFLOWS_RESOURCE_GROUP_NAME')/providers/Microsoft.Web/connections/dih-azure-eventgrid-connector"
+    }, 
+    "EVENTGRID_CONNECTION_RUNTIMEURL":{
+        "type":"string",
+        "value":"@appsetting('EVENTGRID_CONNECTION_RUNTIMEURL')"
+    }, 
+    "auth": {
+        "type":"object", 
+        "value": {
+            "type": "Raw",
+            "scheme": "Key",
+            "parameter": "@appsetting('azureeventgrid-connectionKey')"
+        }
+    }
+
+}

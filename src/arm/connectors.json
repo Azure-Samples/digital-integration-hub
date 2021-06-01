@@ -1,0 +1,94 @@
+
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "principleid": {
+            "type": "string"
+        },
+        "objectid": {
+            "type": "string"
+        },
+        "clientid": {
+            "type": "string"
+        },
+        "tenantid": {
+            "type": "string"
+        },
+        "clientsecret": {
+            "type": "string"
+        }, 
+        "connectionsEventgridName": {
+            "defaultValue": "eventgridpublish",
+            "type": "string"
+        }, 
+        "location": {
+            "defaultValue": "westeurope",
+            "type": "string"
+        }
+    },
+    "variables": {
+        "eventgridId": "[subscriptionResourceId('Microsoft.Web/locations/managedApis', parameters('location'), 'azureeventgrid')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connectionsEventgridName')]",
+            "location": "[parameters('location')]",
+            "kind": "V2",
+            "properties": {
+                "displayName": "eventgrid",
+                "parameterValues": {
+                    "token:clientId":"[parameters('clientid')]",
+                    "token:clientSecret":"[parameters('clientsecret')]",
+                    "token:TenantId": "[parameters('tenantid')]",
+                    "token:grantType":"client_credentials"
+                },
+                "api": {
+                    "id": "[variables('eventgridId')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections/accessPolicies",
+            "apiVersion": "2016-06-01",
+            "name": "[concat(parameters('connectionsEventgridName'),'/', parameters('objectid'))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('connectionsEventgridName'))]"
+            ],
+            "properties": {
+                "principal": {
+                    "type": "ActiveDirectory",
+                    "identity": {
+                        "tenantId": "[parameters('principleid')]",
+                        "objectId": "[parameters('objectid')]"
+                    }
+                }
+            }
+        } 
+
+    ],
+    "outputs": {
+      "connectionsEventgridName": {
+        "type": "string",
+        "value": "[parameters('connectionsEventgridName')]"
+      },
+      "eventgridConnectionId": {
+        "type": "string",
+        "value": "[resourceId('Microsoft.Web/connections', parameters('connectionsEventgridName'))]"
+      },
+      "eventgridManagedApiId": {
+        "type": "string",
+        "value": "[variables('eventgridId')]"
+      },
+      "eventgridRuntimeConnectionUrl": {
+        "type": "string",
+        "value": "[reference(resourceId('Microsoft.Web/connections', parameters('connectionsEventgridName')),'2016-06-01', 'full').properties.connectionRuntimeUrl]"
+      }
+    }
+  }
+
+
+

@@ -1,0 +1,125 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Condition": {
+                "actions": {
+                    "Parse_JSON_2": {
+                        "inputs": {
+                            "content": "@triggerBody()?['data']",
+                            "schema": {
+                                "properties": {
+                                    "validationCode": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "runAfter": {},
+                        "type": "ParseJson"
+                    },
+                    "Terminate": {
+                        "inputs": {
+                            "runStatus": "Succeeded"
+                        },
+                        "runAfter": {
+                            "Parse_JSON_2": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Terminate"
+                    }
+                },
+                "else": {
+                    "actions": {
+                        "Invoke_a_workflow_in_this_workflow_app": {
+                            "inputs": {
+                                "body": {
+                                    "event": "@body('Parse_JSON')?['event']",
+                                    "rowID": "@body('Parse_JSON')?['rowID']",
+                                    "table": "@body('Parse_JSON')?['table']"
+                                },
+                                "host": {
+                                    "workflow": {
+                                        "id": "SyncItems"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Parse_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Workflow"
+                        },
+                        "Parse_JSON": {
+                            "inputs": {
+                                "content": "@triggerBody()?['data']",
+                                "schema": {
+                                    "properties": {
+                                        "event": {
+                                            "type": "string"
+                                        },
+                                        "rowID": {
+                                            "type": "integer"
+                                        },
+                                        "table": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "runAfter": {},
+                            "type": "ParseJson"
+                        }
+                    }
+                },
+                "expression": {
+                    "and": [
+                        {
+                            "contains": [
+                                "@triggerBody()?['data']",
+                                "validationCode"
+                            ]
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "If"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "triggers": {
+            "When_a_resource_event_occurs": {
+                "inputs": {
+                    "body": {
+                        "properties": {
+                            "destination": {
+                                "endpointType": "webhook",
+                                "properties": {
+                                    "endpointUrl": "@{listCallbackUrl()}"
+                                }
+                            },
+                            "topic": "@parameters('PARAMS_INTEGRATION_PATH')"
+                        }
+                    },
+                    "host": {
+                        "connection": {
+                            "referenceName": "azureeventgrid"
+                        }
+                    },
+                    "path": "/subscriptions/@{encodeURIComponent(appsetting('WORKFLOWS_SUBSCRIPTION_ID'))}/providers/@{encodeURIComponent('Microsoft.EventGrid.Topics')}/resource/eventSubscriptions",
+                    "queries": {
+                        "x-ms-api-version": "2017-09-15-preview"
+                    }
+                },
+                "splitOn": "@triggerBody()",
+                "type": "ApiConnectionWebhook"
+            }
+        }
+    },
+    "kind": "Stateful"
+}

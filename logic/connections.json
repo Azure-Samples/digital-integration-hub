@@ -1,0 +1,25 @@
+{
+  "managedApiConnections": {
+    "azureeventgrid": {
+      "api": {
+        "id": "@parameters('EVENTGRID_CONNECTOR_API')"
+      },
+      "connection": {
+        "id": "@parameters('EVENTGRID_CONNECTION')"
+      },
+      "connectionRuntimeUrl": "@appsetting('EVENTGRID_CONNECTION_RUNTIMEURL')",
+      "authentication": "@parameters('auth')"
+    }
+  },
+  "serviceProviderConnections": {
+    "AzureBlob": {
+      "parameterValues": {
+        "connectionString": "@appsetting('AzureBlob_connectionString')"
+      },
+      "serviceProvider": {
+        "id": "/serviceProviders/AzureBlob"
+      },
+      "displayName": "blob"
+    }
+  }
+}

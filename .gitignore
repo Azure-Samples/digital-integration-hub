@@ -1,0 +1,20 @@
+
+# Mac finder
+.DS_Store
+
+# All ndoe modules
+node_modules
+
+# bicep compiled ARM files are ignored
+# this line is commented out while connections and access policies are deployed via ARM. 
+#/src/arm/*.json
+
+# local tmp store
+.local/
+.azurite/
+
+# Azure Functions artifacts
+bin
+obj
+appsettings.json
+local.settings.json

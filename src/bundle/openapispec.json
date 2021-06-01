@@ -1,0 +1,70 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Items API",
+        "description": "Sample CRUD API for Digital Integration Hub accelerator",
+        "version": "1.0"
+    },
+    "servers": [{
+        "url": "https://dih-azure-apim-wfetnsablojjo.azure-api.net/dih-azure-function-wfetnsablojjo"
+    }],
+    "paths": {
+        "/items": {
+            "get": {
+                "summary": "GetItem",
+                "operationId": "get-getitem",
+                "responses": {
+                    "200": {
+                        "description": null
+                    }
+                } 
+            },
+            "put": {
+                "summary": "UpdateItem",
+                "operationId": "put-updateitem",
+                "responses": {
+                    "200": {
+                        "description": null
+                    }
+                }
+            },
+            "delete": {
+                "summary": "DeleteItem",
+                "operationId": "delete-deleteitem",
+                "responses": {
+                    "200": {
+                        "description": null
+                    }
+                }
+            },
+            "post": {
+                "summary": "CreateItem",
+                "operationId": "post-createitem",
+                "responses": {
+                    "200": {
+                        "description": null
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "apiKeyHeader": {
+                "type": "apiKey",
+                "name": "Ocp-Apim-Subscription-Key",
+                "in": "header"
+            },
+            "apiKeyQuery": {
+                "type": "apiKey",
+                "name": "subscription-key",
+                "in": "query"
+            }
+        }
+    },
+    "security": [{
+        "apiKeyHeader": []
+    }, {
+        "apiKeyQuery": []
+    }]
+}

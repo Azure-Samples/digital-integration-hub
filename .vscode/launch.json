@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to Functions",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "preLaunchTask": "func: host start"
+    },
+    {
+      "name": "Attach to Logic App",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:azureLogicAppsStandard.pickProcess}"
+    }
+  ]
+}
