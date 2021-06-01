@@ -48,3 +48,23 @@ The function implements a simple CRUD based API. You can simply go ahead and add
 Most of the routines you would want to run when developing are implemeted as [make targets](makefile), so simply invoke 'make build' to build the application, or use [VS Code tasks](.vscode/tasks.json). 
 
 On checkins, the [app builds](.github/workflows/build.yaml) and a [Porter bundle](src/bundle) is being created and pushed to be consumed in the deploy stages. 
+
+
+## Required to get started 
+## Required to get started
+
+1. Enable CNAB bundle support in GitHub
+    1. Follow [this guide](https://docs.github.com/en/free-pro-team@latest/packages/guides/enabling-improved-container-support) to enable support for CNAB on GitHub
+
+1. Set following deployment time parameters as GitHub secrets
+    | Parameter | GitHub Secret | Description |
+    | --- | --- | --- |
+    | Package admin | `PACKAGE_ADMIN` | Create a [personal access token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token#creating-a-token) with 'write:packages' permissions and save the value to this secret |
+    | Azure credentials | `AZURE_CREDENTIALS` | `az login -o none && az ad sp create-for-rbac --role contributor --sdk-auth` |
+    | Postgres admin password | `POSTGRES_DB_ADMIN_PASSWORD` | Configure what postgres database admin password you want to use - [more info](https://docs.microsoft.com/en-us/azure/postgresql/concepts-security#access-management) by saving the password to a [GitHub Secrets](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) name |
+
+1. Check the environment.yaml file to change the naming prefix for your deployments. 
+
+1. To deploy this solution to azure run the build workflow, this will eventually kick-off the deployment workflow as well.
+
+
