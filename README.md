@@ -51,7 +51,6 @@ On checkins, the [app builds](.github/workflows/build.yaml) and a [Porter bundle
 
 
 ## Required to get started 
-## Required to get started
 
 1. Enable CNAB bundle support in GitHub
     1. Follow [this guide](https://docs.github.com/en/free-pro-team@latest/packages/guides/enabling-improved-container-support) to enable support for CNAB on GitHub
