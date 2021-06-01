@@ -45,7 +45,7 @@ To create multiple environments of the application, you can either extend the ex
 
 As part of this template, resource names are [generated automatically](/docs/concepts.md#resource-naming).
 
-You can change the `RESOURCE_NAME_PREFIX` and `ENVIRONMENT_TAG` attribute in the [environments.yaml](../environments/environments.yaml) file to influence the generated resource group and resource names.
+You can change the `RESOURCE_NAME_PREFIX` attribute in the [environments.yaml](../environments/environments.yaml) file to influence the generated resource group and resource names.
 
 ## Add a new service
 

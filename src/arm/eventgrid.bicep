@@ -1,10 +1,11 @@
 param location string
 param name_prefix string
 
+var eventgrid_name = '${name_prefix}-eventgrid-${uniqueString(resourceGroup().id)}'
 
 resource eventgrid 'Microsoft.EventGrid/topics@2020-10-15-preview' = {
   location : location
-  name: '${name_prefix}-eventgrid-topic'
+  name: eventgrid_name
   kind: 'Azure'
   sku: {
     name: 'Basic'

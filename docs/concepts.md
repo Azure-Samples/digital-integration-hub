@@ -102,9 +102,9 @@ No resource naming logic is defined in Bicep files. All Bicep files take resourc
 
 The resource group name will be named according to the following pattern:
 
-    {Name Prefix}-{environment tag}
+    {Name Prefix}-
 
-For example, with the environment defined above, the resulting resource group name will be `dih-azure-test`.
+For example, with the environment defined above, the resulting resource group name will be `dih-azure-{your-resource}`.
 
 #### Other resource names
 
@@ -133,7 +133,7 @@ To ensure that each resource name does not exceed the maximum length (specific t
 
 Support for deploying to multiple resource groups is out of scope for the template.
 
-The resource naming algorithm does not guarantee that multiple templates deployed in the same subscription will not conflict on names. In particular, if "team" subscriptions are used, there is a probability that there will be a conflict related to the resource group name. Make sure you are using different `RESOURCE_NAME_PREFIX` and / or `ENVIRONMENT_TAG` to prevent this. Naming conflicts for other resources are unlikely because they get a differentiating suffix based on the full resource group ID.
+The resource naming algorithm does not guarantee that multiple templates deployed in the same subscription will not conflict on names. In particular, if "team" subscriptions are used, there is a probability that there will be a conflict related to the resource group name. Make sure you are using different `RESOURCE_NAME_PREFIX` to prevent this. Naming conflicts for other resources are unlikely because they get a differentiating suffix based on the full resource group ID.
 
 ## GitHub Action workflows
 

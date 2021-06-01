@@ -17,12 +17,6 @@
       }
     },
     {
-      "name": "ENVIRONMENT_TAG",
-      "source": {
-        "env": "ENVIRONMENT_TAG"
-      }
-    },
-    {
       "name": "POSTGRES_PASSWORD",
       "source": {
         "env": "POSTGRES_PASSWORD"
