@@ -11,9 +11,6 @@ parameters:
   - name: NAME_PREFIX
     type: string
     description: 'Name prefix for Azure resources'
-  - name: ENVIRONMENT_TAG
-    type: string
-    description: 'Name environment tag prefix for Azure resources'
   - name: POSTGRES_PASSWORD
     type: string
     sensitive: true
@@ -68,7 +65,7 @@ install:
         - group
         - create
       flags:
-        name: '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}'
+        name: '{{ bundle.parameters.NAME_PREFIX }}'
         location: '{{ bundle.parameters.LOCATION }}'
 
   - az:
@@ -78,12 +75,12 @@ install:
         - group
         - create
       flags:
-        resource-group: '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}'
-        name: '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}-deployment'
+        resource-group: '{{ bundle.parameters.NAME_PREFIX }}'
+        name: '{{ bundle.parameters.NAME_PREFIX }}-deployment'
         template-file: 'output/arm/main.bicep'
         parameters: '
         location={{ bundle.parameters.LOCATION }}
-        name_prefix={{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}
+        name_prefix={{ bundle.parameters.NAME_PREFIX }}
         postgres_adminPassword={{ bundle.parameters.POSTGRES_PASSWORD }}
         '
       outputs:
@@ -113,8 +110,8 @@ install:
         - group
         - create
       flags:
-        resource-group: '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}'
-        name: '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}-apiservice-deployment'
+        resource-group: '{{ bundle.parameters.NAME_PREFIX }}'
+        name: '{{ bundle.parameters.NAME_PREFIX }}-apiservice-deployment'
         template-file: 'output/arm/apimService.bicep'
         parameters: '
         apimName={{ bundle.outputs.APIM_NAME }}
@@ -127,8 +124,8 @@ install:
         - group
         - create
       flags:
-        resource-group: '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}'
-        name: '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}-logicappresource-deployment'
+        resource-group: '{{ bundle.parameters.NAME_PREFIX }}'
+        name: '{{ bundle.parameters.NAME_PREFIX }}-logicappresource-deployment'
         template-file: 'output/arm/connectors.json'
         parameters: '
         objectid={{ bundle.outputs.logicAppSystemAssignedIdentityObjectId }}
@@ -136,7 +133,7 @@ install:
         tenantid={{ bundle.outputs.AZURE_DEPLOY_TENANT_ID }}
         clientid={{ bundle.outputs.AZURE_DEPLOY_CLIENT_ID }}
         clientsecret={{ bundle.outputs.AZURE_DEPLOY_CLIENT_SECRET }}
-        connectionsEventgridName={{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}-eventgrid-connector
+        connectionsEventgridName={{ bundle.parameters.NAME_PREFIX }}-eventgrid-connector
         location={{ bundle.parameters.LOCATION }}
         '
       outputs:
@@ -168,7 +165,7 @@ install:
       arguments:
         - '{{ bundle.outputs.FUNCTION_ID }}'
         - output/function/function.zip
-        - '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}'
+        - '{{ bundle.parameters.NAME_PREFIX }}'
         - '{{ bundle.outputs.EVENTGRID_NAME }}'
       suppress-output: false
 
@@ -176,7 +173,7 @@ install:
       command: ./zip_deploy_la.sh
       description: 'Deploy the Logic App'
       arguments:
-        - '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}'
+        - '{{ bundle.parameters.NAME_PREFIX }}'
         - '{{ bundle.outputs.LOGIC_NAME }}'
         - output/logic/logic.zip
         - '{{ bundle.outputs.EVENTGRID_NAME }}'
@@ -191,6 +188,6 @@ uninstall:
         - group
         - delete
       flags:
-        name: '{{ bundle.parameters.NAME_PREFIX }}-{{ bundle.parameters.ENVIRONMENT_TAG }}'
+        name: '{{ bundle.parameters.NAME_PREFIX }}'
         yes: ''
         no-wait: ''

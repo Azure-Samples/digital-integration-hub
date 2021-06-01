@@ -5,4 +5,3 @@
     AZURE_LOCATION: "westeurope"
     AZURE_NAME_PREFIX: "dih-azure"
     API_NODE_ENV: "development"
-    ENVIRONMENT_TAG: "dev"

@@ -33,6 +33,7 @@ To run both Logic Apps and Azure Functions side by side, the Function needs the 
 1. For now you will need to paste in a connection string to an available Azure Storage account in the `AzureWebJobsStorage` value in your local.settings.json file in your Logic project. 
 1. Once Codespaces is open, in your terminal navigate to your 'logic' folder and run the following command: `Func host start`. This will start the Logic App. 
 1. In file navigation in VS Code, open the 'SyncItems' folder and right click on the workflow.json file and select 'overview'. Copy the endpoint URL and paste it in your.env file under INTEGRATION_ENDPOINT. Make sure to use the .env file in the root folder of your project. You will need to restart your dev container. 
+1. In file navigation in VS Code, open the 'SyncItems' folder and right click on the workflow.json file and select 'overview'. Copy the endpoint URL and paste it in your.env file under INTEGRATION_ENDPOINT. You may need to restart your dev container. 
 1. Once you have restarted your dev container, repeat step 1 to start the Logic App. 
 1. To start your function, in your terminal navigate to your src/function file and run the following command: `Func host start --port 7072`. The Function and Logic App need to run on different port to avoid conflicts. 
 1. Test your function end to end by running the following command in the terminal `curl http://localhost:7072/api/items`. 

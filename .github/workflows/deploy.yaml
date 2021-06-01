@@ -76,11 +76,11 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }} 
       - name: Get deployed bundle digest
         run: |
-          RG_NAME=${{ matrix.config.AZURE_NAME_PREFIX }}-{{matrix.config.ENVIRONMENT_TAG}}}
+          RG_NAME=${{ matrix.config.AZURE_NAME_PREFIX }}
           echo BUNDLE_DIGEST_DEPLOYED=$(az group show --name $RG_NAME | jq .tags.bundle_digest -r) >> $GITHUB_ENV
       - name: Get deployed config digest
         run: |
-          RG_NAME=${{ matrix.config.AZURE_NAME_PREFIX }}--{{matrix.config.ENVIRONMENT_TAG}}}
+          RG_NAME=${{ matrix.config.AZURE_NAME_PREFIX }}
           echo CONFIG_DIGEST_DEPLOYED=$(az group show --name $RG_NAME | jq .tags.config_digest -r) >> $GITHUB_ENV
       - name: Output digests to compare to log
         run: |
@@ -102,10 +102,9 @@ jobs:
         env:
           LOCATION: ${{ matrix.config.AZURE_LOCATION }}
           NAME_PREFIX: ${{ matrix.config.AZURE_NAME_PREFIX }}
-          ENVIRONMENT_TAG: ${{matrix.config.ENVIRONMENT_TAG}}}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_DB_ADMIN_PASSWORD }}
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Update tag
         if: (env.BUNDLE_DIGEST_DEPLOYED != env.BUNDLE_DIGEST_INCOMING) || (env.CONFIG_DIGEST_DEPLOYED != env.CONFIG_DIGEST_INCOMING)
         run: |
-          az group update --name ${{ matrix.config.AZURE_NAME_PREFIX }}-${{ matrix.config.ENVIRONMENT_TAG }} --tags bundle_digest="${{ env.BUNDLE_DIGEST_INCOMING }}" config_digest="${{ env.CONFIG_DIGEST_INCOMING}}"
+          az group update --name ${{ matrix.config.AZURE_NAME_PREFIX }} --tags bundle_digest="${{ env.BUNDLE_DIGEST_INCOMING }}" config_digest="${{ env.CONFIG_DIGEST_INCOMING}}"
